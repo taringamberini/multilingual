@@ -123,6 +123,44 @@ How does it work? First this plugin groups all of your posts by language. Then a
 have its posts filtered to display only matching languages. This also works for `site.categories` and `site.tags`.
 If your site uses [octopress-linkblog](https://github.com/octopress/linkblog) to publish link-posts, your `site.articles` and `site.linkposts` will be filtered as well.
 
+
+### Keeping index installed from Octopress Initial Setup
+
+If you had previously installed and configured Octopress as described at [Initial setup](http://octopress.org/docs/setup/) section you end up with an `index.html` which loops over a `paginator`:
+
+    ---
+    layout: default
+    ---
+
+    <div class="blog-index">
+        {{ it | language_name }}
+
+
+      {% assign index = true %}
+      {% for post in paginator.posts %}
+
+In order to make the `paginator` aware of the multilingual configuration you need to add the [Multilingual pagination](https://github.com/octopress/paginate#user-content-multilingual-pagination) yaml front `paginate: true` to your per-language indexes:
+
+ * `index-en.html`
+ * `/de/index.html`
+ * `/es/index.html`
+
+For example the `/es/index.html` will be:
+
+    ---
+    layout: default
+    paginate: true
+    lang: es
+    ---
+
+    <div class="blog-index">
+      {% assign index = true %}
+      {% for post in paginator.posts %}
+      ...
+
+If your per-language indexes are still empty install the [octopress/paginate](https://github.com/octopress/paginate) in order to make Octopress able to correctly handle the yaml front `paginate: true`.
+
+
 ## Site template language dictionaries
 
 It's annoying to have to write multiple site layouts and includes when the only differences are translated words. Octopress Multilingual
@@ -160,7 +198,7 @@ If no language is configured for a page or post, it will default to the site's d
 
 ```
 # No page lang, site is configured lang: en
-{{ lang.title }} =>  English title
+{{ lang.title }} =>  English titleinde
 ```
 
 Since these are Jekyll data sources, these dictionaries can also be accessed at `site.data.lang_en` and `site.data.lang_de`. This
