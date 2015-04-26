@@ -198,7 +198,7 @@ If no language is configured for a page or post, it will default to the site's d
 
 ```
 # No page lang, site is configured lang: en
-{{ lang.title }} =>  English titleinde
+{{ lang.title }} =>  English title
 ```
 
 Since these are Jekyll data sources, these dictionaries can also be accessed at `site.data.lang_en` and `site.data.lang_de`. This
